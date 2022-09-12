@@ -1,1 +1,133 @@
+# ASSIM SAUDE - AGENDAMENTO DE TAREFAS DO SISTEMA [SIRIUS]
+# DT.ULTIMA MODIFICACAO: 25/08/2022 17:00 | GETEC
+# {Min  Hora  Dia  Mes  DiaDaSemana  comando} [Onde: 1=seg, 7=dom]
+
+#05 00 * * *     /root/scripts/cache/assimcbk_sirius0010.sh &> /tmp/logCBK
+#00 18 * * 5-6  /root/scripts/cache/assimcbk_copyfile.sh   &> /tmp/logSCP
+*/5 * * * *     php /home/httpd/html/scripts/webservice/check_webservice.php &> /dev/null 
+
+ */5 * * * *     /root/scripts/cache/assim_Check0010.sh     &> /tmp/logchk1
+ 30 07 * * *     /root/scripts/cache/assim_Check0020.sh     &> /tmp/logchk2
+ 00 17 * * *     /root/scripts/cache/assim_Check0020.sh     &> /tmp/logchk2
+ 00 */4 * * *    /root/scripts/cache/assim_Check0030.sh     &> /tmp/logchk3
+ 00 * * * *      /root/scripts/cache/assim_Check0040.sh 100 &> /tmp/logchk4
+ */5 * * * *     /root/scripts/cache/assim_Check0050.sh     &> /tmp/logchk5
+ 00 */1 * * *    sh /usr/local/bin/PurgeFileTemp1           &> /tmp/logPurge1
+ 00 06 * * *     sh /usr/local/bin/PurgeFileTemp2           &> /tmp/logPurge2
+ 00 06 * * *     sh /usr/local/bin/PurgeFileTemp4           &> /tmp/logPurge4
+ */15 * * * *    /home/common/admcache/cmonitor.sh ura      &> /dev/null
+ */15 * * * *    /home/common/admcache/cmonitor.sh zas      &> /dev/null
+ */5 7-17 * * 1-5 /root/scripts/cache/saps_timeout.sh       &> /tmp/logTimeOut
+ 00 04 02 * *    csession cache -U "USER" "GLB1^ZPURGEGLB"  &> /tmp/logPurge5
+ 00 04 * * *     csession cache -U "USER" "GLB2^ZPURGEGLB"  &> /tmp/logPurge6
+
+ # -- Atualizacao de Tabelas MySQL [AWS & CAPELLA]
+ 00 21 * * *   /root/scripts/cache/aws/saps_prog0010.sh     &> /tmp/logCarta 
+ 00 22 * * *   /usr/local/bin/atualizaMedOncoNewAWS         &> /tmp/logMRF5
+ 00 23 * * *   php /root/scripts/cache/aws/saps_mysql02.php &> /tmp/logPWD2
+ 00 00 * * *   csession cache -U "ATD" "^ccpsAgenda"       &> /tmp/logRamon
+ 00 00 01 * *  csession cache -U "USER" "ZINADEMAIL0010"   &> /tmp/logRRA10
+ 05 00 * * *   /root/scripts/cache/aws/saps_mysqlSAPS.sh   &> /tmp/logPHPSAPS
+ 05 00 * * *   /root/scripts/cache/aws/saps_mysqlGECRE.sh  &> /tmp/logPHPGECRE
+
+ 00 21 * * *     /root/scripts/cache/saps_prog000.sh        &> /tmp/logP000
+ 01 00 * * *     /root/scripts/cache/saps_prog012.sh        &> /tmp/logP012
+ 01 00 * * *     /root/scripts/cache/saps_prog013.sh        &> /tmp/logP013
+ 00 22 * * *     /root/scripts/cache/saps_prog004.sh        &> /tmp/logP004
+ 15 00 * * *     /root/scripts/cache/saps_prog009.sh        &> /tmp/logP009
+ 15 00 * * *     /root/scripts/cache/saps_prog010.sh        &> /tmp/logP010
+ 00 02 * * *     /root/scripts/cache/saps_wrel000.sh        &> /tmp/logR000
+
+ */5 * * * *     php /usr/local/bin/logCargaCPU             &> /tmp/logLCA
+ 10 09 * * *     php /usr/local/bin/boletosmsEnvio          &> /tmp/logSMS1
+ 00 10 * * *     php /usr/local/bin/boletosmsRetorno        &> /tmp/logSMS2
+ 20 09 * * *     php /usr/local/bin/pjotinhasmsEnvio        &> /tmp/logSMSPJ
+ 00 09 * * *     csession cache -U "USER" "^imapcdaut"       &> /tmp/logIMAP
+ 01 00 * * *	 csession cache -U "USER" "^eaccarCaut"      &> /tmp/logsaps1
+ 0 */1 * * 1-5   csession cache -U "USER" "^itaratexlsAUTO"  &> /tmp/logericm1
+ 00 00 01 * *    csession cache -U "USER" "cron^eiImportFE"  &> /tmp/logMFR
+ 00 00 * * *     csession cache -U "USER" "cron^criaitafx0"  &> /tmp/logITAFX0
+ 00 00 * * *     csession cache -U "USER" "^livroGmidia"     &> /tmp/logMFR
+ 05 00 * * *     csession cache -U "USER" "^ZSPDATABI"       &> /tmp/zspdatabi
+ 30 00 * * *     csession cache -U "USER" "^iRlotrldaut"     &> /tmp/logLoteAut
+ 30 00 * * *     csession cache -U "USER" "^ZGETEL0010"      &> /tmp/logThales
+ 30 00 * * 1     csession cache -U "USER" "^empindobito"     &> /tmp/logMFR2
+ 02 00 * * *	 csession cache -U "USER" "^ececanaut"       &> /tmp/logsaps2
+ 15 00 * * *	 csession cache -U "USER" "^CRMTransfCRON"   &> /tmp/logericm2
+ 15 00 * * *	 csession cache -U "USER" "^cancPendExpCRON" &> /tmp/logericm3
+ 30 00 * * *     csession cache -U "USER" "^eaplaprogaut"    &> /tmp/logplaaut
+ 30 00 * * *     csession cache -U "USER" "^CRrelInadPjotao" &> /tmp/logThales
+ 00 21 * * 1-5   csession cache -U "USER" "^pegarQstSatis"   &> /tmp/logThales2
+ 00 01 * * *     csession cache -U "USER" "^eacspben12m"     &> /tmp/logAlan
+ 00 01 * * *     csession cache -U "USER" "^emolotRVendaOnline"  &> /tmp/logVAV
+ 00 01 * * *     csession cache -U "USER" "^emolotRdtlVendaOnline" &> /tmp/logVAVdtl
+ 10 00 * * *     csession cache -U "USER" "^iexteradapAut"   &> /tmp/logAlan2
+ 01 00 * * *     csession cache -U "USER" "^zcancelaSol60"   &> /tmp/logMFR3
+ 00 23 * * 1-5   csession cache -U "USER" "reenvio^ZWEBAMEACASAVE"  &> /tmp/logSentinela
+ 00 01 * * *     csession cache -U "API" "ini^atualizacaoPacientes" &> /tmp/logConexa
+ 00 07 * * 1-5   csession cache -U "USER" "^ipendPropVendaOnline" &> /tmp/logAlan3
+ 30 01 * * 1-5   csession cache -U "USER" "^eapGlobaisVendaOnline" &> /tmp/logAlan4
+ 00 06 3,5 * *   csession cache -U "USER" "^ZEMAIL0010" &> /tmp/logSMSSIB
+ 00 22 * * *     csession cache -U "USER" "^ZWEB1010"   &> /tmp/logThales3
+
+# -- Tarefas Sistema
+# 0-55/5 * * * *     /var/yp/atualiza.sh &> /dev/null
+ 
+# -- Tarefa realizada para gerar arquivo com contratos digitalizados - Jjunior
+# 00 08 * * 1        /root/scripts/contratos/contratos.sh &> /dev/null
+ 
+# -- Dispara email com log dos servicos ativos no Sistema - Jjunior
+#  00 07 * * *        /root/scripts/status/status.sh        &> /dev/null
+ 
+# -- Tarefa realizada para visualizar espaco em disco - Raphael
+# 00 06 * * *        /root/scripts/espaco.sh &> /dev/null
+# 00 06 * * *        /root/scripts/espaco-jorge.sh &> /dev/null
+ 
+# -- Backup dos Arquivos mais importantes - Raphael
+  00 00 * * 6           /root/scripts/backup/backup.sh &> /dev/null
+# 00 00 * * 6           /root/scripts/backup-vega.sh &> /dev/null
+ 
+# -- Backup para o SIRIUS -> SERVIDORES - Raphael
+#15 18 * * 1-5,7	/root/scripts/rdist1.sh > /root/scripts/rdist1.log
+#15 18 * * 6		/root/scripts/rdist2.sh > /root/scripts/rdist2.log
+#15 18 * * 1-5,7	/root/scripts/rdist1.sh &> /dev/null
+#15 18 * * 6		/root/scripts/rdist2.sh &> /dev/null
+15 19 * * 1,3,5		/root/scripts/rdist-vega.sh > /var/log/rdist/rdist-vega.log
+#15 19 * * 2,4		/root/scripts/rdist-taurus.sh > /var/log/rdist/rdist-taurus.log
+15 12 * * *		/root/scripts/rdist-taurus.sh > /var/log/rdist/rdist-taurus.log
+ 
+# -- Monitor dos Links
+*/5 * * * *            /home/httpd/html/monitor/agmonitor &> /dev/null
+*/5 * * * *            /home/httpd/html/monitor-rrm/agmonitor &> /dev/null
+ 
+# -- Envia Alarme de por E-mail
+#*/16 * * * *            /home/httpd/html/monitor/alarme.sh &> /dev/null
+#*/16 * * * *           /home/httpd/html/monitor-rrm/alarme.sh &> /dev/null
+ 
+# -- Webalizer - Estatistica do Site
+## 00 06 * * *     /usr/bin/webalizer -c /etc/webalizer.conf
+ 
+# -- Sarg
+## 00 00 * * *   /usr/bin/sarg &> /dev/null
+ 
+# -- Updatedb
+00 00 * * *   /usr/bin/updatedb &> /dev/null
+ 
+# -- Cacti
+## */5 * * * *     php /home/httpd/html/cacti/poller.php > /dev/null 2>&1
+
+# -- Tarefas
+#00 00 * * *	/root/scripts/tarefas.sh	&> /dev/null
+00 00 * * *	ntpdate -u a.ntp.br		> /tmp/ntp.log
+00 00 * * *	/root/scripts/du-smb.sh		&> /dev/null
+# */5 * * * * 	sh /root/scripts/zlsof.sh       > /dev/null 2>&1
+
+ 
+#Alarme de Size - tamanho de arquivos e pastas /home/smb
+00 12 * * *     exec /home/common/assim/sizeinbox.sh 50 mail    > /dev/null 2>&1
+ 
+*/5 * * * *     sh /root/scripts/http-log.sh	> /dev/null 2>&1
+#00 */2 * * 1-5  sh /home/common/admcache/cmonitor.sh buttons
+
+# -- End --
 
